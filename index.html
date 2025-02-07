@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capturar Localização</title>
+</head>
+<body>
+    <h1>Obtendo sua Localização...</h1>
+    <p id="status">Aguardando...</p>
+    <script>
+        function sendLocation(latitude, longitude) {
+            let url = `https://www.google.com/maps?q=${latitude},${longitude}`;
+            document.getElementById("status").innerHTML = `Localização: <a href="${url}" target="_blank">${latitude}, ${longitude}</a>`;
+            
+            // Aqui você pode enviar para um servidor:
+            // fetch("https://seuservidor.com/salvar_localizacao", {
+            //     method: "POST",
+            //     body: JSON.stringify({ latitude, longitude }),
+            //     headers: { "Content-Type": "application/json" }
+            // });
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        sendLocation(position.coords.latitude, position.coords.longitude);
+                    },
+                    (error) => {
+                        document.getElementById("status").innerHTML = "Erro ao obter localização.";
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            } else {
+                document.getElementById("status").innerHTML = "Seu dispositivo não suporta geolocalização.";
+            }
+        }
+
+        // Executa automaticamente ao carregar a página
+        getLocation();
+    </script>
+</body>
+</html>
