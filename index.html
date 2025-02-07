@@ -13,12 +13,19 @@
             let url = `https://www.google.com/maps?q=${latitude},${longitude}`;
             document.getElementById("status").innerHTML = `Localização: <a href="${url}" target="_blank">${latitude}, ${longitude}</a>`;
             
-            // Aqui você pode enviar para um servidor:
-            // fetch("https://seuservidor.com/salvar_localizacao", {
-            //     method: "POST",
-            //     body: JSON.stringify({ latitude, longitude }),
-            //     headers: { "Content-Type": "application/json" }
-            // });
+            // Enviar para o Google Sheets usando o Web App
+            fetch("https://script.google.com/macros/s/AKfycbzTY8kbsebSa8JrxWSX9c9cY_sHjxC0fGoNTl1Rd9OUG1fK-2YFkBRahQ5ozh_pxHDO/exec", {
+                method: "POST", // Método POST para enviar os dados
+                body: JSON.stringify({ latitude: latitude, longitude: longitude }), // Envia os dados como JSON
+                headers: { "Content-Type": "application/json" } // Define o tipo de conteúdo
+            })
+            .then(response => response.text()) // Lê a resposta do servidor (como texto)
+            .then(data => {
+                console.log("Sucesso:", data); // Mostra a resposta de sucesso no console
+            })
+            .catch((error) => {
+                console.error("Erro:", error); // Mostra se houver erro no console
+            });
         }
 
         function getLocation() {
@@ -39,11 +46,6 @@
 
         // Executa automaticamente ao carregar a página
         getLocation();
-        fetch("https://docs.google.com/spreadsheets/d/1txQe1FSHMKy4u_LH7bmD2f3dWZGoKL_-R256RY6eDVc/edit?usp=sharing", {
-    method: "POST",
-    body: JSON.stringify({ latitude: lat, longitude: lon }),
-    headers: { "Content-Type": "application/json" }
-});
     </script>
 </body>
 </html>
