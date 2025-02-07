@@ -12,7 +12,7 @@
     <script>
         function sendLocation(latitude, longitude) {
             // URL do seu Web App do Google Apps Script
-            const url = "https://script.google.com/macros/s/AKfycbxZUVlpDjn3zrgD_QLi6282Iu3JVeutB4zjs6V2pzMH_YF7avaPFmx9xkUFKYBakVYYQg/exec";
+            const url = "https://script.google.com/macros/s/AKfycbzYtp4YTNQRqUbeDmeOpuE_X6Jhsekwu-wlFOwwLmJ_pV4sBqiqedkMryz3oA-1SaYpQA/exec";
 
             // Envia os dados de latitude e longitude para o Google Apps Script
             fetch(url, {
@@ -40,9 +40,11 @@
                         const longitude = position.coords.longitude;
 
                         // Chama a função para enviar os dados para o Google Apps Script
+                        console.log("Latitude:", latitude, "Longitude:", longitude);  // Verifique se as coordenadas estão corretas no console
                         sendLocation(latitude, longitude);
                     },
                     (error) => {
+                        console.error("Erro ao obter localização:", error);
                         document.getElementById("status").innerHTML = "Erro ao obter localização.";
                     },
                     { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
